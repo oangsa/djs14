@@ -256,7 +256,7 @@ module.exports = {
                           await interaction.deferReply();
         
                           player.queue.add(res.tracks);
-                          await player.play();
+                          if (!player.playing && !player.paused && !player.queue.size) player.play()
         
                           const playlistEmbed = new EmbedBuilder()
                             .setDescription(
