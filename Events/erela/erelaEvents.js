@@ -1,5 +1,5 @@
 const client = require("../../index");
-const { EmbedBuilder, Embed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const pms = require("pretty-ms");
 const { magenta, white, red, green } = require("chalk");
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
