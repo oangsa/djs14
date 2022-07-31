@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require("discord.js")
 module.exports = {
     data: {
-        name: "play"
+        name: "skip"
     },
     execute(interaction, client){
         const { member } = interaction;
