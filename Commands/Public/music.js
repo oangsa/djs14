@@ -136,6 +136,173 @@ module.exports = {
         try {
             switch (options.getSubcommand()) {
                 case "play": {
+                    const query = interaction.options.getString("query");
+        
+                    if (player.state !== "CONNECTED") player.connect();
+        
+                    try {
+                      if (query.match(client.lavasfy.spotifyPattern)) {
+                        const node = client.lavasfy.nodes.get("main");
+                        res = await node.load(query);
+        
+                        if (res.loadType === "LOAD_FAILED") {
+                          if (!player.queue.current) player.destroy();
+        
+                          return interaction.reply({
+                            embeds: [
+                                new EmbedBuilder()
+                                .setColor("BLURPLE")
+                                .setDescription("🔹 | An error has occured while trying to add this song.")
+                                ],
+                                ephemeral: true
+                            });     
+                        }
+        
+                        if (res.loadType === "NO_MATCHES") {
+                          if (!player.queue.current) player.destroy();
+        
+                          return interaction.reply({
+                            embeds: [
+                                new EmbedBuilder()
+                                .setColor("BLURPLE")
+                                .setDescription("🔹 | No result found.")
+                                ],
+                                ephemeral: true
+                          });
+                        }
+        
+                        if (res.loadType === "PLAYLIST_LOADED") {
+                          await interaction.deferReply();
+        
+                          const tracks = [];
+                          for (const track of res.tracks) {
+                            const trackData = TrackUtils.build(track, interaction.user);
+                            tracks.push(trackData);
+                          }
+                          player.queue.add(tracks);
+        
+                          await player.play();
+        
+                          const playlistEmbed = new EmbedBuilder()
+                            .setDescription(
+                              `🔹 | **[A playlist](${query})** has been added to the queue.`
+                            )
+                            .addFields([
+                              {
+                                name: "Enqueued",
+                                value: `\`${res.tracks.length}\` tracks`,
+                              },
+                            ]);
+                          await interaction.editReply({ embeds: [playlistEmbed] });
+                        }
+        
+                        if (
+                          res.loadType === "TRACK_LOADED" ||
+                          res.loadType === "SEARCH_RESULT"
+                        ) {
+                          await interaction.deferReply();
+        
+                          player.queue.add(
+                            TrackUtils.build(res.tracks[0], interaction.user)
+                          );
+        
+                          await player.play();
+        
+                          const enqueueEmbed = new EmbedBuilder()
+                            .setColor("BLURPLE")
+                            .setDescription(
+                              `🔹 | Enqueued **[${res.tracks[0].info.title}](${res.tracks[0].info.uri})** [${member}]`
+                            )
+                            .setTimestamp();
+                          interaction.editReply({ embeds: [enqueueEmbed] });
+        
+                          if (player.queue.totalSize > 1)
+                            enqueueEmbed.addFields([
+                              {
+                                name: "Position in queue",
+                                value: `${player.queue.size - 0}`,
+                              },
+                            ]);
+                          return interaction.editReply({ embeds: [enqueueEmbed] });
+                        }
+                      } else {
+                        res = await player.search(query, interaction.user);
+        
+                        if (res.loadType === "LOAD_FAILED") {
+                          if (!player.queue.current) player.destroy();
+                          return interaction.reply({
+                            embeds: [
+                                new EmbedBuilder()
+                                .setColor("BLURPLE")
+                                .setDescription("🔹 | An error has occured while trying to add this song.")
+                                ],
+                                ephemeral: true
+                            });
+                        }
+        
+                        if (res.loadType === "NO_MATCHES") {
+                          if (!player.queue.current) player.destroy();
+                          return interaction.reply({
+                           embeds: [
+                                new EmbedBuilder()
+                                .setColor("BLURPLE")
+                                .setDescription("🔹 | No result found.")
+                                ],
+                                ephemeral: true
+                            });
+                        }
+        
+                        if (res.loadType === "PLAYLIST_LOADED") {
+                          await interaction.deferReply();
+        
+                          player.queue.add(res.tracks);
+                          await player.play();
+        
+                          const playlistEmbed = new EmbedBuilder()
+                            .setDescription(
+                              `🔹 | **[${res.playlist.name}](${query})** has been added to the queue.`
+                            )
+                            .addFields([
+                              {
+                                name: "Enqueued",
+                                value: `\`${res.tracks.length}\` tracks`,
+                              },
+                            ]);
+                          return interaction.editReply({ embeds: [playlistEmbed] });
+                        }
+        
+                        if (
+                          res.loadType === "TRACK_LOADED" ||
+                          res.loadType === "SEARCH_RESULT"
+                        ) {
+                          await interaction.deferReply();
+        
+                          player.queue.add(res.tracks[0]);
+                          await player.play();
+        
+                          const enqueueEmbed = new EmbedBuilder()
+                            .setColor("BLURPLE")
+                            .setDescription(
+                              `🔹 | Enqueued **[${res.tracks[0].title}](${res.tracks[0].uri})** [${member}]`
+                            )
+                            .setTimestamp();
+                          interaction.editReply({ embeds: [enqueueEmbed] });
+        
+                          if (player.queue.totalSize > 1)
+                            enqueueEmbed.addFields([
+                              {
+                                name: "Position in queue",
+                                value: `${player.queue.size - 0}`,
+                              },
+                            ]);
+                          return interaction.editReply({ embeds: [enqueueEmbed] });
+                        }
+                      }
+                    } catch (err) {
+                      console.log(err);
+                    }
+                  }
+                  break;
                 //     const query = interaction.options.getString("query");
           
                 //     if (player.state !== "CONNECTED") player.connect();
@@ -319,161 +486,161 @@ module.exports = {
                 //     }
                 //   }
                 
-                    const query = interaction.options.getString("query");
-                    res = await player.search(query, interaction.user.username);
+                //     const query = interaction.options.getString("query");
+                //     res = await player.search(query, interaction.user.username);
 
-                    if (res.loadType === "LOAD_FAILED") {
-                        if (!player.queue.current) player.destroy();
-                        return interaction.reply({embeds: [
-                            new EmbedBuilder()
-                            .setColor("BLURPLE")
-                            .setDescription("🔹| An error has occured while trying to add this song.")
-                        ],
-                        ephemeral: true})
-                    }
+                //     if (res.loadType === "LOAD_FAILED") {
+                //         if (!player.queue.current) player.destroy();
+                //         return interaction.reply({embeds: [
+                //             new EmbedBuilder()
+                //             .setColor("BLURPLE")
+                //             .setDescription("🔹| An error has occured while trying to add this song.")
+                //         ],
+                //         ephemeral: true})
+                //     }
 
-                    if (res.loadType === "NO_MATCHES") {
-                        if (!player.queue.current) player.destroy();
-                        return interaction.reply({embeds: [
-                            new EmbedBuilder()
-                            .setColor("BLURPLE")
-                            .setDescription("🔹| No results found.")
-                        ],
-                        ephemeral: true})
-                    }
+                //     if (res.loadType === "NO_MATCHES") {
+                //         if (!player.queue.current) player.destroy();
+                //         return interaction.reply({embeds: [
+                //             new EmbedBuilder()
+                //             .setColor("BLURPLE")
+                //             .setDescription("🔹| No results found.")
+                //         ],
+                //         ephemeral: true})
+                //     }
 
-                    if (res.loadType === "PLAYLIST_LOADED") {
-                        player.connect();
-                        player.queue.add(res.tracks);
-                        if (!player.playing && !player.paused && player.queue.totalSize === res.tracks.length) player.play();
-                        const playlistEmbed = new EmbedBuilder()
-                            .setDescription(`🔹 | **[${res.playlist.name}](${query})** has been added to the queue.`)
-                            .addFields({name: "Enqueued", value: `\`${res.tracks.length}\` tracks`})
-                        return interaction.reply({ embeds: [playlistEmbed] })
-                    }
+                //     if (res.loadType === "PLAYLIST_LOADED") {
+                //         player.connect();
+                //         player.queue.add(res.tracks);
+                //         if (!player.playing && !player.paused && player.queue.totalSize === res.tracks.length) player.play();
+                //         const playlistEmbed = new EmbedBuilder()
+                //             .setDescription(`🔹 | **[${res.playlist.name}](${query})** has been added to the queue.`)
+                //             .addFields({name: "Enqueued", value: `\`${res.tracks.length}\` tracks`})
+                //         return interaction.reply({ embeds: [playlistEmbed] })
+                //     }
 
-                    if (res.loadType === "TRACK_LOADED" || res.loadType === "SEARCH_RESULT") {
-                        player.connect();
-                        player.queue.add(res.tracks[0]);
-                    }
+                //     if (res.loadType === "TRACK_LOADED" || res.loadType === "SEARCH_RESULT") {
+                //         player.connect();
+                //         player.queue.add(res.tracks[0]);
+                //     }
 
-                    const enqueueEmbed = new EmbedBuilder()
-                        .setColor("BLURPLE")
-                        .setDescription(`Enqueued **[${res.tracks[0].title}](${res.tracks[0].uri})** [${member}]`)
-                    await interaction.reply({ embeds: [enqueueEmbed] });
+                //     const enqueueEmbed = new EmbedBuilder()
+                //         .setColor("BLURPLE")
+                //         .setDescription(`Enqueued **[${res.tracks[0].title}](${res.tracks[0].uri})** [${member}]`)
+                //     await interaction.reply({ embeds: [enqueueEmbed] });
 
-                    if (!player.playing && !player.paused && !player.queue.size) player.play()
+                //     if (!player.playing && !player.paused && !player.queue.size) player.play()
                     
-                    if (player.queue.totalSize > 1)
-                    enqueueEmbed.addFields({name:"Position in queue", value: `${player.queue.size - 0}`});
-                    return interaction.editReply({ embeds: [enqueueEmbed] })
-                }
-                case "volume": {
-                    const volume = options.getNumber("percent");
-                    if (!player.playing)
-                        return interaction.reply({embeds: [
-                            new EmbedBuilder()
-                            .setColor("BLURPLE")
-                            .setDescription("🔹| There is nothing in the queue.")
-                        ],
-                        ephemeral: true});
-                    if (volume < 0 || volume > 100)
-                        return interaction.reply({embeds: [
-                            new EmbedBuilder()
-                            .setColor("BLURPLE")
-                            .setDescription("🔹| There is nothing in the queue.")
-                        ],
-                        ephemeral: true});
-                    player.setVolume(volume);
+                //     if (player.queue.totalSize > 1)
+                //     enqueueEmbed.addFields({name:"Position in queue", value: `${player.queue.size - 0}`});
+                //     return interaction.editReply({ embeds: [enqueueEmbed] })
+                // }
+                // case "volume": {
+                //     const volume = options.getNumber("percent");
+                //     if (!player.playing)
+                //         return interaction.reply({embeds: [
+                //             new EmbedBuilder()
+                //             .setColor("BLURPLE")
+                //             .setDescription("🔹| There is nothing in the queue.")
+                //         ],
+                //         ephemeral: true});
+                //     if (volume < 0 || volume > 100)
+                //         return interaction.reply({embeds: [
+                //             new EmbedBuilder()
+                //             .setColor("BLURPLE")
+                //             .setDescription("🔹| There is nothing in the queue.")
+                //         ],
+                //         ephemeral: true});
+                //     player.setVolume(volume);
 
-                    const volumeEmbed = new EmbedBuilder()
-                        .setColor("BLURPLE")
-                        .setDescription(
-                            `🔹| Volume has been set to **${player.volume}%**.`
-                        );
-                    return interaction.reply({
-                        embeds: [volumeEmbed]
-                    });
-                }
-                case "repeat": {
-                    switch (options.getString("type")) {
-                        case "none": {
-                            if (!player.trackRepeat && !player.queueRepeat)
-                                return interaction.reply({embeds: [
-                                    new EmbedBuilder()
-                                    .setColor("BLURPLE")
-                                    .setDescription("🔹| Repeat mode is not enabled at all.")
-                                ],
-                                ephemeral: true});
+                //     const volumeEmbed = new EmbedBuilder()
+                //         .setColor("BLURPLE")
+                //         .setDescription(
+                //             `🔹| Volume has been set to **${player.volume}%**.`
+                //         );
+                //     return interaction.reply({
+                //         embeds: [volumeEmbed]
+                //     });
+                // }
+                // case "repeat": {
+                //     switch (options.getString("type")) {
+                //         case "none": {
+                //             if (!player.trackRepeat && !player.queueRepeat)
+                //                 return interaction.reply({embeds: [
+                //                     new EmbedBuilder()
+                //                     .setColor("BLURPLE")
+                //                     .setDescription("🔹| Repeat mode is not enabled at all.")
+                //                 ],
+                //                 ephemeral: true});
 
-                            if (player.trackRepeat) {
-                                player.setTrackRepeat(false);
-                                return interaction.reply({embeds: [
-                                    new EmbedBuilder()
-                                    .setColor("BLURPLE")
-                                    .setDescription("🔹| Repeat mode has been disabled. (Song)")
-                                ],
-                                ephemeral: true}
-                                );
-                            }
+                //             if (player.trackRepeat) {
+                //                 player.setTrackRepeat(false);
+                //                 return interaction.reply({embeds: [
+                //                     new EmbedBuilder()
+                //                     .setColor("BLURPLE")
+                //                     .setDescription("🔹| Repeat mode has been disabled. (Song)")
+                //                 ],
+                //                 ephemeral: true}
+                //                 );
+                //             }
 
-                            if (player.queueRepeat) {
-                                player.setQueueRepeat(false);
-                                return interaction.reply({embeds: [
-                                    new EmbedBuilder()
-                                    .setColor("BLURPLE")
-                                    .setDescription("🔹| Repeat mode has been disabled. (Queue)")
-                                ],
-                                ephemeral: true});
-                            }
-                        }
-                        case "queue": {
-                            if (!player.playing)
-                                return interaction.reply({embeds: [
-                                    new EmbedBuilder()
-                                    .setColor("BLURPLE")
-                                    .setDescription("🔹| There is nothing in the queue.")
-                                ],
-                                ephemeral: true});
-                            if (!player.queue.length)
-                                return interaction.reply({embeds: [
-                                    new EmbedBuilder()
-                                    .setColor("BLURPLE")
-                                    .setDescription("🔹| There is nothing in the queue.")
-                                ],
-                                ephemeral: true});
+                //             if (player.queueRepeat) {
+                //                 player.setQueueRepeat(false);
+                //                 return interaction.reply({embeds: [
+                //                     new EmbedBuilder()
+                //                     .setColor("BLURPLE")
+                //                     .setDescription("🔹| Repeat mode has been disabled. (Queue)")
+                //                 ],
+                //                 ephemeral: true});
+                //             }
+                //         }
+                //         case "queue": {
+                //             if (!player.playing)
+                //                 return interaction.reply({embeds: [
+                //                     new EmbedBuilder()
+                //                     .setColor("BLURPLE")
+                //                     .setDescription("🔹| There is nothing in the queue.")
+                //                 ],
+                //                 ephemeral: true});
+                //             if (!player.queue.length)
+                //                 return interaction.reply({embeds: [
+                //                     new EmbedBuilder()
+                //                     .setColor("BLURPLE")
+                //                     .setDescription("🔹| There is nothing in the queue.")
+                //                 ],
+                //                 ephemeral: true});
 
-                            if (!player.queueRepeat) {
-                                player.setQueueRepeat(true);
-                                return interaction.reply({embeds: [
-                                    new EmbedBuilder()
-                                    .setColor("BLURPLE")
-                                    .setDescription("🔹| Repeat mode has been enabled. (Queue)")
-                                ],
-                                ephemeral: true});
-                            }
-                        }
-                        case "song": {
-                            if (!player.playing)
-                                return interaction.reply({embeds: [
-                                    new EmbedBuilder()
-                                    .setColor("BLURPLE")
-                                    .setDescription("🔹| There is nothing in the queue.")
-                                ],
-                                ephemeral: true});
+                //             if (!player.queueRepeat) {
+                //                 player.setQueueRepeat(true);
+                //                 return interaction.reply({embeds: [
+                //                     new EmbedBuilder()
+                //                     .setColor("BLURPLE")
+                //                     .setDescription("🔹| Repeat mode has been enabled. (Queue)")
+                //                 ],
+                //                 ephemeral: true});
+                //             }
+                //         }
+                //         case "song": {
+                //             if (!player.playing)
+                //                 return interaction.reply({embeds: [
+                //                     new EmbedBuilder()
+                //                     .setColor("BLURPLE")
+                //                     .setDescription("🔹| There is nothing in the queue.")
+                //                 ],
+                //                 ephemeral: true});
 
-                            if (!player.trackRepeat) {
-                                player.setTrackRepeat(true);
-                                return interaction.reply({embeds: [
-                                    new EmbedBuilder()
-                                    .setColor("BLURPLE")
-                                    .setDescription("🔹| There is nothing in the queue.")
-                                ],
-                                ephemeral: true});
-                            }
-                        }
-                    }
-                }
+                //             if (!player.trackRepeat) {
+                //                 player.setTrackRepeat(true);
+                //                 return interaction.reply({embeds: [
+                //                     new EmbedBuilder()
+                //                     .setColor("BLURPLE")
+                //                     .setDescription("🔹| There is nothing in the queue.")
+                //                 ],
+                //                 ephemeral: true});
+                //             }
+                //         }
+                //     }
+                
                 case "settings": {
                     switch (options.getString("options")) {
                         case "skip": {

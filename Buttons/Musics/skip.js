@@ -11,7 +11,7 @@ module.exports = {
             textChannel: interaction.channelId,
             selfDeafen: true,
         });
-        if (player.playing) return interaction.reply({embeds: [
+        if (!player.playing) return interaction.reply({embeds: [
             new EmbedBuilder()
             .setColor("BLURPLE")
             .setDescription("🔹| There is nothing in the queue.")
