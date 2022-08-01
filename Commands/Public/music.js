@@ -179,7 +179,7 @@ module.exports = {
                           await player.play();
         
                           const playlistEmbed = new EmbedBuilder()
-                            .setColor("#008000")
+                            .setColor("#FFFDD0")
                             .setDescription(
                               `🎶 | **[A playlist](${query})** has been added to the queue.`
                             )
@@ -205,7 +205,7 @@ module.exports = {
                           await player.play();
         
                           const enqueueEmbed = new EmbedBuilder()
-                            .setColor("#008000")
+                            .setColor("#FFFDD0")
                             .setDescription(
                               `🎶 | Enqueued **[${res.tracks[0].info.title}](${res.tracks[0].info.uri})** [${member}]`
                             )
@@ -256,7 +256,7 @@ module.exports = {
                           await player.play()
         
                           const playlistEmbed = new EmbedBuilder()
-                            .setColor("#008000")
+                            .setColor("#FFFDD0")
                             .setDescription(
                               `🎶 | **[${res.playlist.name}](${query})** has been added to the queue.`
                             )
@@ -276,7 +276,7 @@ module.exports = {
                             await interaction.deferReply();
                             player.queue.add(res.tracks[0])
                             const enqueueEmbed = new EmbedBuilder()
-                                .setColor("#008000")
+                                .setColor("#FFFDD0")
                                 .setDescription(
                                  `🎶 | Enqueued **[${res.tracks[0].title}](${res.tracks[0].uri})** [${member}]`
                                 )
@@ -402,7 +402,7 @@ module.exports = {
                                 player.setTrackRepeat(false);
                                 return interaction.reply({embeds: [
                                     new EmbedBuilder()
-                                    .setColor("#008000")
+                                    .setColor("#FFFDD0")
                                     .setDescription("🔸| Repeat mode has been disabled. (Song)")
                                 ],
                                 ephemeral: true}
@@ -413,7 +413,7 @@ module.exports = {
                                 player.setQueueRepeat(false);
                                 return interaction.reply({embeds: [
                                     new EmbedBuilder()
-                                    .setColor("#008000")
+                                    .setColor("#FFFDD0")
                                     .setDescription("🔸| Repeat mode has been disabled. (Queue)")
                                 ],
                                 ephemeral: true});
@@ -445,7 +445,7 @@ module.exports = {
                                 player.setQueueRepeat(true);
                                 return interaction.reply({embeds: [
                                     new EmbedBuilder()
-                                    .setColor("#008000")
+                                    .setColor("#FFFDD0")
                                     .setDescription("🔁 | Repeat mode has been enabled. (Queue)")
                                 ],
                                 ephemeral: true});
@@ -497,7 +497,7 @@ module.exports = {
                             await player.stop();
 
                             const skipEmbed = new EmbedBuilder()
-                                .setColor("#008000")
+                                .setColor("#FFFDD0")
                                 .setDescription(`⏭️ | Skipped.`)
                                 .setTimestamp();
 
@@ -510,7 +510,7 @@ module.exports = {
                             const track = player.queue.current;
 
                             const npEmbed = new EmbedBuilder()
-                                .setColor("#008000")
+                                .setColor("#FFFDD0")
                                 .setTitle("🎶| Now Playing")
                                 .setDescription(
                                     `[${track.title}](${track.uri}) [${player.queue.current.requester}]`
@@ -532,7 +532,7 @@ module.exports = {
                             await player.pause(true);
 
                             const pauseEmbed = new EmbedBuilder()
-                                .setColor("#008000")
+                                .setColor("#FFFDD0")
                                 .setDescription("⏸️ | Paused.");
                             return interaction.reply({
                                 embeds: [pauseEmbed],
@@ -543,7 +543,7 @@ module.exports = {
                             await player.pause(false);
 
                             const resumeEmbed = new EmbedBuilder()
-                                .setColor("#008000")
+                                .setColor("#FFFDD0")
                                 .setDescription("▶️ | Resumed.");
                             return interaction.reply({
                                 embeds: [resumeEmbed],
@@ -554,7 +554,7 @@ module.exports = {
                             player.destroy();
 
                             const disconnectEmbed = new EmbedBuilder()
-                                .setColor("#008000")
+                                .setColor("#FFFDD0")
                                 .setDescription("⏹️ | Disconnected.");
                             return interaction.reply({
                                 embeds: [disconnectEmbed]
@@ -572,7 +572,7 @@ module.exports = {
                             const lyrics = await searches.lyrics();
 
                             const lyricsEmbed = new EmbedBuilder()
-                                .setColor("#007fff")
+                                .setColor("#E6E3D3")
                                 .setTitle(`📃 | Lyrics for **${trackTitle}**`)
                                 .setDescription(lyrics)
                                 .setFooter({
@@ -602,7 +602,7 @@ module.exports = {
                             player.queue.shuffle();
 
                             const shuffleEmbed = new EmbedBuilder()
-                                .setColor("#008000")
+                                .setColor("#FFFDD0")
                                 .setDescription("🔀 | Shuffled the queue.");
                             return interaction.reply({
                                 embeds: [shuffleEmbed]

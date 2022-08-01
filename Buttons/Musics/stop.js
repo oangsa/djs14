@@ -26,7 +26,7 @@ module.exports = {
         ephemeral: true});
         player.destroy();
         const pauseEmbed = new EmbedBuilder()
-        .setColor("#008000")
+        .setColor("#FFFDD0")
         .setDescription("⏹️ | Stoped.");
         return interaction.reply({
             embeds: [pauseEmbed],

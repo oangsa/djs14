@@ -28,7 +28,7 @@ module.exports = {
             player.setTrackRepeat(true)
             interaction.reply({embeds: [
                 new EmbedBuilder()
-                .setColor("#008000")
+                .setColor("#FFFDD0")
                 .setDescription("🔁 | Repeat mode has been enabled. (Song)")
             ],
             ephemeral: true});
@@ -36,7 +36,7 @@ module.exports = {
             player.setTrackRepeat(true);
             return interaction.reply({embeds: [
                 new EmbedBuilder()
-                .setColor("#008000")
+                .setColor("#FFFDD0")
                 .setDescription("🔁 | Repeat mode has been enabled. (Song)")
             ],
             ephemeral: true});
@@ -44,7 +44,7 @@ module.exports = {
             player.setQueueRepeat(true);
             return interaction.reply({embeds: [
                 new EmbedBuilder()
-                .setColor("#008000")
+                .setColor("#FFFDD0")
                 .setDescription("🔁 | Repeat mode has been enabled. (Queue)")
             ],
             ephemeral: true});

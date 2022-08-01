@@ -36,7 +36,7 @@ module.exports = {
             player.setQueueRepeat(false);
             return interaction.reply({embeds: [
                 new EmbedBuilder()
-                .setColor("#008000")
+                .setColor("#FFFDD0")
                 .setDescription("✅ | Repeat mode disabled.")
             ],
             ephemeral: true});

@@ -33,7 +33,7 @@ module.exports = {
         const lyrics = await searches.lyrics();
         // await interaction.deferReply();
         const lyricsEmbed = new EmbedBuilder()
-        .setColor("#007fff")
+        .setColor("#E6E3D3")
         .setTitle(`📃 | Lyrics for **${trackTitle}**`)
         .setDescription(lyrics)
         .setFooter({text: "Provided by Genius"})

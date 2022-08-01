@@ -70,7 +70,7 @@ module.exports = {
       client.channels.cache.get(player.textChannel).send({
         embeds: [
           new EmbedBuilder()
-            .setColor("#008000")
+            .setColor("#FFFDD0")
             .setDescription(
               `🎶 | Now Playing: **[${track.title}](${track.uri})** [<@${
                 track.requester.id
@@ -87,7 +87,7 @@ module.exports = {
       channel.send({
         embeds: [
           new EmbedBuilder()
-          .setColor("#008000")
+          .setColor("#FFFDD0")
           .setDescription("🔹| Queue/ Song Ended.")
         ]
       });

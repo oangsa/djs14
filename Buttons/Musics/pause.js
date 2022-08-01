@@ -22,7 +22,7 @@ module.exports = {
             player.pause(true);
             return interaction.reply({embeds: [
                 new EmbedBuilder()
-                .setColor("#008000")
+                .setColor("#FFFDD0")
                 .setDescription("⏸️ | Paused.")
             ],
             ephemeral: true});
@@ -30,7 +30,7 @@ module.exports = {
             player.pause(false);
             return interaction.reply({embeds: [
                 new EmbedBuilder()
-                .setColor("#008000")
+                .setColor("#FFFDD0")
                 .setDescription("▶️ | Resumed.")
             ],
             ephemeral: true});
