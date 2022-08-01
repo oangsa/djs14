@@ -12,26 +12,26 @@ module.exports = {
             textChannel: interaction.channelId,
             selfDeafen: true,
         });
-        if (!VoiceChannel) return interaction.reply({ embeds: [
+        if (!VoiceChannel || player.queue.current == null) return interaction.reply({ embeds: [
             new EmbedBuilder()
-            .setColor("BLURPLE")
-            .setDescription("🔹| There is nothing in the queue.")
+            .setColor("#FF0000")
+            .setDescription("🔸| There is nothing in the queue or you don't joined the voice channel yet.")
         ],
         ephemeral: true});
         if (player.playing) {
             player.pause(true);
             return interaction.reply({embeds: [
                 new EmbedBuilder()
-                .setColor("BLURPLE")
-                .setDescription("🔹| Paused.")
+                .setColor("#008000")
+                .setDescription("⏸️ | Paused.")
             ],
             ephemeral: true});
         } else {
             player.pause(false);
             return interaction.reply({embeds: [
                 new EmbedBuilder()
-                .setColor("BLURPLE")
-                .setDescription("🔹| Played.")
+                .setColor("#008000")
+                .setDescription("▶️ | Resumed.")
             ],
             ephemeral: true});
         }

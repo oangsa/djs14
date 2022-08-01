@@ -100,23 +100,17 @@ module.exports = {
         const VoiceChannel = member.voice.channel;
 
         const noVC = new EmbedBuilder()
-            .setColor("BLURPLE")
+            .setColor("#FF0000")
             .setDescription(
-                "🔹| You need to be in a voice channel to use this command."
+                "🔸| You need to be in a voice channel to use this command."
             );
 
         const alreadyPlaying = new EmbedBuilder()
-            .setColor("BLURPLE")
+            .setColor("#FF0000")
             .setDescription(
-                `🔹| Sorry but I'm already playing music in <#${guild.members.me.voice.channelId}>.`
+                `🔸| Sorry but I'm already playing music in <#${guild.members.me.voice.channelId}>.`
             );
-
-        if (!VoiceChannel)
-            return interaction.reply({
-                embeds: [noVC],
-                ephemeral: true,
-            });
-
+        if (!VoiceChannel) return interaction.reply({ embeds: [noVC], ephemeral: true});
         if (
             guild.members.me.voice.channelId &&
             VoiceChannel.id !== guild.members.me.voice.channelId
@@ -130,6 +124,7 @@ module.exports = {
             voiceChannel: member.voice.channel.id,
             textChannel: interaction.channelId,
             selfDeafen: true,
+            volume: 50,
         });
 
         let res;
@@ -151,8 +146,8 @@ module.exports = {
                           return interaction.reply({
                             embeds: [
                                 new EmbedBuilder()
-                                .setColor("BLURPLE")
-                                .setDescription("🔹 | An error has occured while trying to add this song.")
+                                .setColor("#FF0000")
+                                .setDescription("🔸| An error has occured while trying to add this song.")
                                 ],
                                 ephemeral: true
                             });     
@@ -164,8 +159,8 @@ module.exports = {
                           return interaction.reply({
                             embeds: [
                                 new EmbedBuilder()
-                                .setColor("BLURPLE")
-                                .setDescription("🔹 | No result found.")
+                                .setColor("#FF0000")
+                                .setDescription("🔸| No result found.")
                                 ],
                                 ephemeral: true
                           });
@@ -184,8 +179,9 @@ module.exports = {
                           await player.play();
         
                           const playlistEmbed = new EmbedBuilder()
+                            .setColor("#008000")
                             .setDescription(
-                              `🔹 | **[A playlist](${query})** has been added to the queue.`
+                              `🎶 | **[A playlist](${query})** has been added to the queue.`
                             )
                             .addFields([
                               {
@@ -209,9 +205,9 @@ module.exports = {
                           await player.play();
         
                           const enqueueEmbed = new EmbedBuilder()
-                            .setColor("BLURPLE")
+                            .setColor("#008000")
                             .setDescription(
-                              `🔹 | Enqueued **[${res.tracks[0].info.title}](${res.tracks[0].info.uri})** [${member}]`
+                              `🎶 | Enqueued **[${res.tracks[0].info.title}](${res.tracks[0].info.uri})** [${member}]`
                             )
                             .setTimestamp();
                           interaction.editReply({ embeds: [enqueueEmbed] });
@@ -233,8 +229,8 @@ module.exports = {
                           return interaction.reply({
                             embeds: [
                                 new EmbedBuilder()
-                                .setColor("BLURPLE")
-                                .setDescription("🔹 | An error has occured while trying to add this song.")
+                                .setColor("#FF0000")
+                                .setDescription("🔸| An error has occured while trying to add this song.")
                                 ],
                                 ephemeral: true
                             });
@@ -245,8 +241,8 @@ module.exports = {
                           return interaction.reply({
                            embeds: [
                                 new EmbedBuilder()
-                                .setColor("BLURPLE")
-                                .setDescription("🔹 | No result found.")
+                                .setColor("#FF0000")
+                                .setDescription("🔸| No result found.")
                                 ],
                                 ephemeral: true
                             });
@@ -255,12 +251,14 @@ module.exports = {
                         if (res.loadType === "PLAYLIST_LOADED") {
                           await interaction.deferReply();
         
-                          player.queue.add(res.tracks);
-                          if (!player.playing && !player.paused && !player.queue.size) player.play()
+                          player.queue.add(res.tracks[0]);
+                          if (!player.playing && !player.paused && !player.queue.size) 
+                          await player.play()
         
                           const playlistEmbed = new EmbedBuilder()
+                            .setColor("#008000")
                             .setDescription(
-                              `🔹 | **[${res.playlist.name}](${query})** has been added to the queue.`
+                              `🎶 | **[${res.playlist.name}](${query})** has been added to the queue.`
                             )
                             .addFields([
                               {
@@ -278,13 +276,14 @@ module.exports = {
                             await interaction.deferReply();
                             player.queue.add(res.tracks[0])
                             const enqueueEmbed = new EmbedBuilder()
-                                .setColor("BLURPLE")
+                                .setColor("#008000")
                                 .setDescription(
-                                 `🔹 | Enqueued **[${res.tracks[0].title}](${res.tracks[0].uri})** [${member}]`
+                                 `🎶 | Enqueued **[${res.tracks[0].title}](${res.tracks[0].uri})** [${member}]`
                                 )
                                 .setTimestamp();
                         
-                            if (!player.playing && !player.paused && !player.queue.size) player.play()
+                            if (!player.playing && !player.paused && !player.queue.size) 
+                            await player.play()
                             
                             if (player.queue.totalSize > 1)
                             enqueueEmbed.addFields([
@@ -350,139 +349,169 @@ module.exports = {
                 //     enqueueEmbed.addFields({name:"Position in queue", value: `${player.queue.size - 0}`});
                 //     return interaction.editReply({ embeds: [enqueueEmbed] })
                 // }
-                // case "volume": {
-                //     const volume = options.getNumber("percent");
-                //     if (!player.playing)
-                //         return interaction.reply({embeds: [
-                //             new EmbedBuilder()
-                //             .setColor("BLURPLE")
-                //             .setDescription("🔹| There is nothing in the queue.")
-                //         ],
-                //         ephemeral: true});
-                //     if (volume < 0 || volume > 100)
-                //         return interaction.reply({embeds: [
-                //             new EmbedBuilder()
-                //             .setColor("BLURPLE")
-                //             .setDescription("🔹| There is nothing in the queue.")
-                //         ],
-                //         ephemeral: true});
-                //     player.setVolume(volume);
+                case "volume": {
+                    const volume = options.getNumber("percent");
+                    if (!VoiceChannel || player.queue.current == null) return interaction.reply({ embeds: [
+                        new EmbedBuilder()
+                        .setColor("#FF0000")
+                        .setDescription("🔸| There is nothing in the queue or you don't joined the voice channel yet.")
+                        ],
+                        ephemeral: true});
+                    if (!player.playing)
+                        return interaction.reply({embeds: [
+                            new EmbedBuilder()
+                            .setColor("#FF0000")
+                            .setDescription("🔸| There is nothing in the queue.")
+                        ],
+                        ephemeral: true});
+                    if (volume < 0 || volume > 100)
+                        return interaction.reply({embeds: [
+                            new EmbedBuilder()
+                            .setColor("#FF0000")
+                            .setDescription("🔸| There is nothing in the queue.")
+                        ],
+                        ephemeral: true});
+                    player.setVolume(volume);
+                    const volumeEmbed = new EmbedBuilder()
+                        .setColor("#FF0000")
+                        .setDescription(
+                            `🔊 | Volume has been set to **${player.volume}%**.`
+                        );
+                    return interaction.reply({
+                        embeds: [volumeEmbed]
+                    });
+                }
+                case "repeat": {
+                    if (!VoiceChannel || player.queue.current == null) return interaction.reply({ embeds: [
+                        new EmbedBuilder()
+                        .setColor("#FF0000")
+                        .setDescription("🔸| There is nothing in the queue or you don't joined the voice channel yet.")
+                        ],
+                        ephemeral: true});
+                    switch (options.getString("type")) {
+                        case "none": {
+                            if (!player.trackRepeat && !player.queueRepeat)
+                                return interaction.reply({embeds: [
+                                    new EmbedBuilder()
+                                    .setColor("#FF0000")
+                                    .setDescription("🔸| Repeat mode is not enabled at all.")
+                                ],
+                                ephemeral: true});
 
-                //     const volumeEmbed = new EmbedBuilder()
-                //         .setColor("BLURPLE")
-                //         .setDescription(
-                //             `🔹| Volume has been set to **${player.volume}%**.`
-                //         );
-                //     return interaction.reply({
-                //         embeds: [volumeEmbed]
-                //     });
-                // }
-                // case "repeat": {
-                //     switch (options.getString("type")) {
-                //         case "none": {
-                //             if (!player.trackRepeat && !player.queueRepeat)
-                //                 return interaction.reply({embeds: [
-                //                     new EmbedBuilder()
-                //                     .setColor("BLURPLE")
-                //                     .setDescription("🔹| Repeat mode is not enabled at all.")
-                //                 ],
-                //                 ephemeral: true});
+                            if (player.trackRepeat) {
+                                player.setTrackRepeat(false);
+                                return interaction.reply({embeds: [
+                                    new EmbedBuilder()
+                                    .setColor("#008000")
+                                    .setDescription("🔸| Repeat mode has been disabled. (Song)")
+                                ],
+                                ephemeral: true}
+                                );
+                            }
 
-                //             if (player.trackRepeat) {
-                //                 player.setTrackRepeat(false);
-                //                 return interaction.reply({embeds: [
-                //                     new EmbedBuilder()
-                //                     .setColor("BLURPLE")
-                //                     .setDescription("🔹| Repeat mode has been disabled. (Song)")
-                //                 ],
-                //                 ephemeral: true}
-                //                 );
-                //             }
+                            if (player.queueRepeat) {
+                                player.setQueueRepeat(false);
+                                return interaction.reply({embeds: [
+                                    new EmbedBuilder()
+                                    .setColor("#008000")
+                                    .setDescription("🔸| Repeat mode has been disabled. (Queue)")
+                                ],
+                                ephemeral: true});
+                            }
+                        }
+                        case "queue": {
+                            if (!VoiceChannel || player.queue.current == null) return interaction.reply({ embeds: [
+                                new EmbedBuilder()
+                                .setColor("#FF0000")
+                                .setDescription("🔸| There is nothing in the queue or you don't joined the voice channel yet.")
+                                ],
+                                ephemeral: true});
+                            if (!player.playing)
+                                return interaction.reply({embeds: [
+                                    new EmbedBuilder()
+                                    .setColor("#FF0000")
+                                    .setDescription("🔸| There is nothing in the queue.")
+                                ],
+                                ephemeral: true});
+                            if (!player.queue.length)
+                                return interaction.reply({embeds: [
+                                    new EmbedBuilder()
+                                    .setColor("#FF0000")
+                                    .setDescription("🔸| There is nothing in the queue.")
+                                ],
+                                ephemeral: true});
 
-                //             if (player.queueRepeat) {
-                //                 player.setQueueRepeat(false);
-                //                 return interaction.reply({embeds: [
-                //                     new EmbedBuilder()
-                //                     .setColor("BLURPLE")
-                //                     .setDescription("🔹| Repeat mode has been disabled. (Queue)")
-                //                 ],
-                //                 ephemeral: true});
-                //             }
-                //         }
-                //         case "queue": {
-                //             if (!player.playing)
-                //                 return interaction.reply({embeds: [
-                //                     new EmbedBuilder()
-                //                     .setColor("BLURPLE")
-                //                     .setDescription("🔹| There is nothing in the queue.")
-                //                 ],
-                //                 ephemeral: true});
-                //             if (!player.queue.length)
-                //                 return interaction.reply({embeds: [
-                //                     new EmbedBuilder()
-                //                     .setColor("BLURPLE")
-                //                     .setDescription("🔹| There is nothing in the queue.")
-                //                 ],
-                //                 ephemeral: true});
+                            if (!player.queueRepeat) {
+                                player.setQueueRepeat(true);
+                                return interaction.reply({embeds: [
+                                    new EmbedBuilder()
+                                    .setColor("#008000")
+                                    .setDescription("🔁 | Repeat mode has been enabled. (Queue)")
+                                ],
+                                ephemeral: true});
+                            }
+                        }
+                        case "song": {
+                            if (!VoiceChannel || player.queue.current == null) return interaction.reply({ embeds: [
+                                new EmbedBuilder()
+                                .setColor("#FF0000")
+                                .setDescription("🔸| There is nothing in the queue or you don't joined the voice channel yet.")
+                                ],
+                                ephemeral: true});
+                            if (!player.playing)
+                                return interaction.reply({embeds: [
+                                    new EmbedBuilder()
+                                    .setColor("#FF0000")
+                                    .setDescription("🔸| There is nothing in the queue.")
+                                ],
+                                ephemeral: true});
 
-                //             if (!player.queueRepeat) {
-                //                 player.setQueueRepeat(true);
-                //                 return interaction.reply({embeds: [
-                //                     new EmbedBuilder()
-                //                     .setColor("BLURPLE")
-                //                     .setDescription("🔹| Repeat mode has been enabled. (Queue)")
-                //                 ],
-                //                 ephemeral: true});
-                //             }
-                //         }
-                //         case "song": {
-                //             if (!player.playing)
-                //                 return interaction.reply({embeds: [
-                //                     new EmbedBuilder()
-                //                     .setColor("BLURPLE")
-                //                     .setDescription("🔹| There is nothing in the queue.")
-                //                 ],
-                //                 ephemeral: true});
-
-                //             if (!player.trackRepeat) {
-                //                 player.setTrackRepeat(true);
-                //                 return interaction.reply({embeds: [
-                //                     new EmbedBuilder()
-                //                     .setColor("BLURPLE")
-                //                     .setDescription("🔹| There is nothing in the queue.")
-                //                 ],
-                //                 ephemeral: true});
-                //             }
-                //         }
-                //     }
-                
+                            if (!player.trackRepeat) {
+                                player.setTrackRepeat(true);
+                                return interaction.reply({embeds: [
+                                    new EmbedBuilder()
+                                    .setColor("#FF0000")
+                                    .setDescription("🔁 | Repeat mode has been enabled. (Song)")
+                                ],
+                                ephemeral: true});
+                            }
+                        }
+                    }
+                }
                 case "settings": {
+                    if (!VoiceChannel || player.queue.current == null) return interaction.reply({ embeds: [
+                        new EmbedBuilder()
+                        .setColor("#FF0000")
+                        .setDescription("🔸| There is nothing in the queue or you don't joined the voice channel yet.")
+                        ],
+                        ephemeral: true});
                     switch (options.getString("options")) {
                         case "skip": {
                             if (!player.playing)
                                 return interaction.reply({embeds: [
                                     new EmbedBuilder()
-                                    .setColor("BLURPLE")
-                                    .setDescription("🔹| There is nothing in the queue.")
+                                    .setColor("#FF0000")
+                                    .setDescription("🔸| There is nothing in the queue.")
                                 ],
                                 ephemeral: true});
                             await player.stop();
 
                             const skipEmbed = new EmbedBuilder()
-                                .setColor("BLURPLE")
-                                .setDescription(`🔹 | Skipped.`)
+                                .setColor("#008000")
+                                .setDescription(`⏭️ | Skipped.`)
                                 .setTimestamp();
 
                             return interaction.reply({
-                                embeds: [skipEmbed]
+                                embeds: [skipEmbed],
+                                ephemeral: true
                             });
                         }
                         case "nowplaying": {
                             const track = player.queue.current;
 
                             const npEmbed = new EmbedBuilder()
-                                .setColor("BLURPLE")
-                                .setTitle("🎵 | Now Playing")
+                                .setColor("#008000")
+                                .setTitle("🎶| Now Playing")
                                 .setDescription(
                                     `[${track.title}](${track.uri}) [${player.queue.current.requester}]`
                                 )
@@ -495,36 +524,38 @@ module.exports = {
                             if (!player.playing)
                                 return interaction.reply({embeds: [
                                     new EmbedBuilder()
-                                    .setColor("BLURPLE")
-                                    .setDescription("🔹| There is nothing in the queue.")
+                                    .setColor("#FF0000")
+                                    .setDescription("🔸| There is nothing in the queue.")
                                 ],
                                 ephemeral: true});
 
                             await player.pause(true);
 
                             const pauseEmbed = new EmbedBuilder()
-                                .setColor("BLURPLE")
-                                .setDescription("🔹| Paused.");
+                                .setColor("#008000")
+                                .setDescription("⏸️ | Paused.");
                             return interaction.reply({
-                                embeds: [pauseEmbed]
+                                embeds: [pauseEmbed],
+                                ephemeral: true
                             });
                         }
                         case "resume": {
                             await player.pause(false);
 
                             const resumeEmbed = new EmbedBuilder()
-                                .setColor("BLURPLE")
-                                .setDescription("🔹| Resumed.");
+                                .setColor("#008000")
+                                .setDescription("▶️ | Resumed.");
                             return interaction.reply({
-                                embeds: [resumeEmbed]
+                                embeds: [resumeEmbed],
+                                ephemeral: true
                             });
                         }
                         case "stop": {
                             player.destroy();
 
                             const disconnectEmbed = new EmbedBuilder()
-                                .setColor("BLURPLE")
-                                .setDescription("🔹| Disconnected.");
+                                .setColor("#008000")
+                                .setDescription("⏹️ | Disconnected.");
                             return interaction.reply({
                                 embeds: [disconnectEmbed]
                             });
@@ -541,8 +572,8 @@ module.exports = {
                             const lyrics = await searches.lyrics();
 
                             const lyricsEmbed = new EmbedBuilder()
-                                .setColor("BLURPLE")
-                                .setTitle(`🔹| Lyrics for **${trackTitle}**`)
+                                .setColor("#007fff")
+                                .setTitle(`📃 | Lyrics for **${trackTitle}**`)
                                 .setDescription(lyrics)
                                 .setFooter({
                                     text: "Provided by Genius"
@@ -556,40 +587,41 @@ module.exports = {
                             if (!player.playing)
                                 return interaction.reply({embeds: [
                                     new EmbedBuilder()
-                                    .setColor("BLURPLE")
-                                    .setDescription("🔹| There is nothing in the queue.")
+                                    .setColor("#FF0000")
+                                    .setDescription("🔸| There is nothing in the queue.")
                                 ],
                                 ephemeral: true});
                             if (!player.queue.length)
                                 return interaction.reply({embeds: [
                                     new EmbedBuilder()
-                                    .setColor("BLURPLE")
-                                    .setDescription("🔹| There is nothing in the queue.")
+                                    .setColor("#FF0000")
+                                    .setDescription("🔸| There is nothing in the queue.")
                                 ],
                                 ephemeral: true});
 
                             player.queue.shuffle();
 
                             const shuffleEmbed = new EmbedBuilder()
-                                .setColor("BLURPLE")
-                                .setDescription("🔹| Shuffled the queue.");
+                                .setColor("#008000")
+                                .setDescription("🔀 | Shuffled the queue.");
                             return interaction.reply({
                                 embeds: [shuffleEmbed]
                             });
                         }
                         case "queue": {
+                            
                             if (!player.playing)
                                 return interaction.reply({embeds: [
                                     new EmbedBuilder()
-                                    .setColor("BLURPLE")
-                                    .setDescription("🔹| There is nothing in the queue.")
+                                    .setColor("#FF0000")
+                                    .setDescription("🔸| There is nothing in the queue.")
                                 ],
                                 ephemeral: true});
                             if (!player.queue.length)
                                 return interaction.reply({embeds: [
                                     new EmbedBuilder()
-                                    .setColor("BLURPLE")
-                                    .setDescription("🔹| There is nothing in the queue.")
+                                    .setColor("#007fff")
+                                    .setDescription("🔸| There is nothing in the queue.")
                                 ],
                                 ephemeral: true});
 
@@ -599,12 +631,12 @@ module.exports = {
                             const chunked = util.chunk(queue, 10).map((x) => x.join("\n"));
 
                             const queueEmbed = new EmbedBuilder()
-                                .setColor("BLURPLE")
+                                .setColor("#007fff")
                                 .setAuthor({
                                     name: `🔹| Current queue for ${guild.name}`
                                 })
                                 .setTitle(
-                                    `▶️ | Currently playing: ${player.queue.current.title}`
+                                    `🎶 | Currently playing: ${player.queue.current.title}`
                                 )
                                 .setDescription(chunked[0])
                                 .setTimestamp();

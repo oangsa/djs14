@@ -70,11 +70,11 @@ module.exports = {
       client.channels.cache.get(player.textChannel).send({
         embeds: [
           new EmbedBuilder()
-            .setColor("BLURPLE")
+            .setColor("#008000")
             .setDescription(
-              `🔹| Now Playing: **[${track.title}](${track.uri})** [<@${
+              `🎶 | Now Playing: **[${track.title}](${track.uri})** [<@${
                 track.requester.id
-              }> - ${pms(track.duration)}]`
+              }> - ${pms(track.duration)}]\nvolume: \`${player.volume}%\``
             )
             .setTimestamp(),
         ],
@@ -87,7 +87,7 @@ module.exports = {
       channel.send({
         embeds: [
           new EmbedBuilder()
-          .setColor("BLURPLE")
+          .setColor("#008000")
           .setDescription("🔹| Queue/ Song Ended.")
         ]
       });
