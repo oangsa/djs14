@@ -247,15 +247,14 @@ module.exports = {
                                 ephemeral: true
                             });
                         }
-        
                         if (res.loadType === "PLAYLIST_LOADED") {
-                          await interaction.deferReply();
-        
-                          player.queue.add(res.tracks[0]);
-                          if (!player.playing && !player.paused && !player.queue.size) 
-                          await player.play()
-        
-                          const playlistEmbed = new EmbedBuilder()
+                            await interaction.deferReply();
+          
+                            player.queue.add(res.tracks);
+                            if (!player.playing && !player.paused) 
+                            await player.play()
+          
+                            const playlistEmbed = new EmbedBuilder()
                             .setColor("#FFFDD0")
                             .setDescription(
                               `🎶 | **[${res.playlist.name}](${query})** has been added to the queue.`
@@ -266,13 +265,9 @@ module.exports = {
                                 value: `\`${res.tracks.length}\` tracks`,
                               },
                             ]);
-                          return interaction.editReply({ embeds: [playlistEmbed] });
-                        }
-        
-                        if (
-                          res.loadType === "TRACK_LOADED" ||
-                          res.loadType === "SEARCH_RESULT"
-                        ) {
+                            return interaction.editReply({ embeds: [playlistEmbed] });
+                          }
+                        if ( res.loadType === "TRACK_LOADED" ||res.loadType === "SEARCH_RESULT" ) {
                             await interaction.deferReply();
                             player.queue.add(res.tracks[0])
                             const enqueueEmbed = new EmbedBuilder()
@@ -620,7 +615,7 @@ module.exports = {
                             if (!player.queue.length)
                                 return interaction.reply({embeds: [
                                     new EmbedBuilder()
-                                    .setColor("#007fff")
+                                    .setColor("#FF0000")
                                     .setDescription("🔸| There is nothing in the queue.")
                                 ],
                                 ephemeral: true});
@@ -631,7 +626,7 @@ module.exports = {
                             const chunked = util.chunk(queue, 10).map((x) => x.join("\n"));
 
                             const queueEmbed = new EmbedBuilder()
-                                .setColor("#007fff")
+                                .setColor("#E6E3D3")
                                 .setAuthor({
                                     name: `🔹| Current queue for ${guild.name}`
                                 })
