@@ -8,12 +8,12 @@
   "nodes": [
       {
           "id": "main",
-          "host": "node1.kartadharta.xyz",
-          "port": 443,
-          "password": "kdlavalink",
+          "host": "lavalink.rukchadisa.live",
+          "port": 8080,
+          "password": "youshallnotpass",
           "retryAmount": 15, 
           "retryDelay": 6000, 
-          "secure": true
+          "secure": false
       }
     ]
 }
