@@ -139,7 +139,6 @@ module.exports = {
                       if (query.match(client.lavasfy.spotifyPattern)) {
                         const node = client.lavasfy.nodes.get("main");
                         res = await node.load(query);
-        
                         if (res.loadType === "LOAD_FAILED") {
                           if (!player.queue.current) player.destroy();
         
@@ -175,7 +174,6 @@ module.exports = {
                             tracks.push(trackData);
                           }
                           player.queue.add(tracks);
-        
                           await player.play();
         
                           const playlistEmbed = new EmbedBuilder()
@@ -295,55 +293,6 @@ module.exports = {
                     }
                   }
                   break;           
-                //     const query = interaction.options.getString("query");
-                //     res = await player.search(query, interaction.user.username);
-
-                //     if (res.loadType === "LOAD_FAILED") {
-                //         if (!player.queue.current) player.destroy();
-                //         return interaction.reply({embeds: [
-                //             new EmbedBuilder()
-                //             .setColor("BLURPLE")
-                //             .setDescription("🔹| An error has occured while trying to add this song.")
-                //         ],
-                //         ephemeral: true})
-                //     }
-
-                //     if (res.loadType === "NO_MATCHES") {
-                //         if (!player.queue.current) player.destroy();
-                //         return interaction.reply({embeds: [
-                //             new EmbedBuilder()
-                //             .setColor("BLURPLE")
-                //             .setDescription("🔹| No results found.")
-                //         ],
-                //         ephemeral: true})
-                //     }
-
-                //     if (res.loadType === "PLAYLIST_LOADED") {
-                //         player.connect();
-                //         player.queue.add(res.tracks);
-                //         if (!player.playing && !player.paused && player.queue.totalSize === res.tracks.length) player.play();
-                //         const playlistEmbed = new EmbedBuilder()
-                //             .setDescription(`🔹 | **[${res.playlist.name}](${query})** has been added to the queue.`)
-                //             .addFields({name: "Enqueued", value: `\`${res.tracks.length}\` tracks`})
-                //         return interaction.reply({ embeds: [playlistEmbed] })
-                //     }
-
-                //     if (res.loadType === "TRACK_LOADED" || res.loadType === "SEARCH_RESULT") {
-                //         player.connect();
-                //         player.queue.add(res.tracks[0]);
-                //     }
-
-                //     const enqueueEmbed = new EmbedBuilder()
-                //         .setColor("BLURPLE")
-                //         .setDescription(`Enqueued **[${res.tracks[0].title}](${res.tracks[0].uri})** [${member}]`)
-                //     await interaction.reply({ embeds: [enqueueEmbed] });
-
-                //     if (!player.playing && !player.paused && !player.queue.size) player.play()
-                    
-                //     if (player.queue.totalSize > 1)
-                //     enqueueEmbed.addFields({name:"Position in queue", value: `${player.queue.size - 0}`});
-                //     return interaction.editReply({ embeds: [enqueueEmbed] })
-                // }
                 case "volume": {
                     const volume = options.getNumber("percent");
                     if (!VoiceChannel || player.queue.current == null) return interaction.reply({ embeds: [
