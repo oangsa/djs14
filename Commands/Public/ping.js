@@ -7,8 +7,9 @@ module.exports = {
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     /**
      * @param {CommandInteraction} interaction
+     * 
      */
-    execute(interaction) {
-        interaction.reply({content: `${client.ws.ping}`, ephemeral: true})
+    execute(interaction, client) {
+        interaction.editReply({content: `${client.ws.ping}`, ephemeral: true})
     }
 }

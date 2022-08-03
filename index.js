@@ -1,22 +1,23 @@
+//DJS
 const { Client, GatewayIntentBits, Partials, Collection } = require("discord.js");
-
 const { Guilds, GuildMembers, GuildMessages, GuildVoiceStates } = GatewayIntentBits;
 const { User, Message, GuildMember, ThreadMember } = Partials
+const client = new Client({ 
+  intents: [Guilds, GuildMembers, GuildMessages, GuildVoiceStates],
+  partials: [User, Message, GuildMember, ThreadMember]
+});
 
-const { loadEvents } = require("./Handlers/eventHandler");
-const { loadCommands } = require("./Handlers/commandHandler");
-const { loadButtons } = require("./Handlers/buttonHandler")
-
+//ERELA
 const Deezer = require("erela.js-deezer");
 const Apple = require("erela.js-apple");
 const { Manager } = require("erela.js");
 const { LavasfyClient } = require("lavasfy");
 
-
-const client = new Client({ 
-    intents: [Guilds, GuildMembers, GuildMessages, GuildVoiceStates],
-    partials: [User, Message, GuildMember, ThreadMember]
-});
+//HANDLERS
+const { loadEvents } = require("./Handlers/eventHandler");
+const { loadCommands } = require("./Handlers/commandHandler");
+const { loadButtons } = require("./Handlers/buttonHandler");
+const { AntiCrash } = require("./Handlers/anticrashHandler");
 
 client.buttons = new Collection()
 client.commands = new Collection();
@@ -48,6 +49,7 @@ client.login(client.config.TOKEN).then(() => {
   loadEvents(client);
   loadCommands(client);
   loadButtons(client);
+  AntiCrash(client);
 }).catch((err) => console.log(err))
 
 module.exports = client;
