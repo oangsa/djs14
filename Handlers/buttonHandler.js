@@ -3,16 +3,13 @@ function loadButtons(client) {
     const fs = require("fs");
     const table = new ascii().setHeading("Button", "Status");
     const folders = fs.readdirSync("./Buttons");
-    let btnArray = [];
     for (const folder of folders) {
         const files = fs
         .readdirSync(`./Buttons/${folder}`)
         .filter((file) => file.endsWith(".js"));
         for (const file of files) {
             const button = require(`../Buttons/${folder}/${file}`)
-
             client.buttons.set(button.data.name, button)
-            
             table.addRow(file, "✅");
             continue;
         }
