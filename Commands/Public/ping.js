@@ -10,6 +10,6 @@ module.exports = {
      * 
      */
     execute(interaction, client) {
-        interaction.editReply({content: `${client.ws.ping}`, ephemeral: true})
+        interaction.reply({content: `${client.ws.ping}`, ephemeral: true})
     }
 }
