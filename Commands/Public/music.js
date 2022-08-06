@@ -238,9 +238,11 @@ module.exports = {
                   });
                 }
 
-                if (res.loadType === "PLAYLIST_LOADED") {
+                if (res.loadType === "PLAYLIST_LOADED") {      
                   player.queue.add(res.tracks);
-                  await player.play();
+
+                  if (!player.playing && !player.paused) 
+                  await player.play()
 
                   const playlistEmbed = new EmbedBuilder()
                     .setColor("#FFFDD0")
@@ -256,12 +258,12 @@ module.exports = {
                   return interaction.editReply({ embeds: [playlistEmbed] });
                 }
 
-                if (
-                  res.loadType === "TRACK_LOADED" ||
-                  res.loadType === "SEARCH_RESULT"
-                ) {
+                if ( res.loadType === "TRACK_LOADED" || res.loadType === "SEARCH_RESULT") {
+                    
                   player.queue.add(res.tracks[0]);
-                  await player.play();
+                  
+                  if (!player.playing && !player.paused) 
+                    await player.play()
 
                   const enqueueEmbed = new EmbedBuilder()
                     .setColor("#FFFDD0")
