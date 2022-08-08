@@ -12,7 +12,7 @@ module.exports = {
             textChannel: interaction.channelId,
             selfDeafen: true,
         });
-        if (!VoiceChannel || player.queue.current == null) return interaction.reply({ embeds: [
+        if (!VoiceChannel || !player.playing && !player.queue.current) return interaction.reply({ embeds: [
             new EmbedBuilder()
             .setColor("#FF0000")
             .setDescription("🔸| There is nothing in the queue or you don't joined the voice channel yet.")

@@ -15,5 +15,6 @@
           "retryDelay": 6000, 
           "secure": false
       }
-    ]
+    ],
+  "database": "mongodb+srv://oangsa:oangsa58528@sandwich.r5gx7cv.mongodb.net/?retryWrites=true&w=majority"
 }

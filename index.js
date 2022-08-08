@@ -1,9 +1,9 @@
 //DJS
 const { Client, GatewayIntentBits, Partials, Collection } = require("discord.js");
-const { Guilds, GuildMembers, GuildMessages, GuildVoiceStates } = GatewayIntentBits;
+const { Guilds, GuildMembers, GuildMessages, GuildVoiceStates, MessageContent } = GatewayIntentBits;
 const { User, Message, GuildMember, ThreadMember } = Partials
 const client = new Client({ 
-  intents: [Guilds, GuildMembers, GuildMessages, GuildVoiceStates],
+  intents: [Guilds, GuildMembers, GuildMessages, GuildVoiceStates, MessageContent],
   partials: [User, Message, GuildMember, ThreadMember]
 });
 
@@ -22,6 +22,11 @@ const { AntiCrash } = require("./Handlers/anticrashHandler");
 client.buttons = new Collection()
 client.commands = new Collection();
 client.config = require("./config.json");
+
+//Database
+const mongoose = require("mongoose");
+const Database = client.config.database;
+
 
 client.lavasfy = new LavasfyClient(
     {
@@ -50,6 +55,15 @@ client.login(client.config.TOKEN).then(() => {
   loadCommands(client);
   loadButtons(client);
   AntiCrash(client);
+  if (!Database) {
+    return console.log(`${client.user.username} isn't connect to database.`); 
+  }
+  mongoose.connect(Database, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }).then(() => {
+    console.log(`${client.user.username} is now connected to database.`);
+  })
 }).catch((err) => console.log(err))
 
 module.exports = client;
