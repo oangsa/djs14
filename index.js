@@ -47,7 +47,7 @@ client.manager = new Manager({
       let guild = client.guilds.cache.get(id);
       if (guild) guild.shard.send(payload);
     },
-  });
+});
 
 client.login(client.config.TOKEN).then(() => {
   client.removeAllListeners();
