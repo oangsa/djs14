@@ -17,7 +17,7 @@ module.exports = {
         if (message.author.bot) return;
         if (!message.guild) return;
         const content = message.content.toLowerCase();
-        const check = ["nigger", "niger", "niga", "nigga", "node", "nodes", "niggers", "nigaboo", "niggerish", "ดำ", "nig", "nigg", "niega", "niegar", "nieger", "nikker", "nieker", "niker"]
+        const check = ["nigger", "niger", "niga", "nigga", "node", "nodes", "niggers", "nigaboo", "niggerish", "ดำ", "nig", "nigg", "niega", "niegar", "nieger", "nikker", "nieker", "niker", "nieka"]
         var pass = true
         for (var i = 0, ln = check.length; i < ln; i++) {
             if (content.indexOf(check[i]) !== -1) {
@@ -36,15 +36,7 @@ module.exports = {
                     });
                 }
             //logger
-                const embeds = new EmbedBuilder()
-                .setColor("#5865F2")
-                .setDescription(`**• User**: ${message.author.username}\n**• Guild**: ${message.guild.name}\n**• EXP Gain**: ${randomXP}\n**• Total Exp**: ${user.xp}`)
-                // .addFields([{ name: "User", value: `• ${message.author.username}` }])
-                // .addFields([{ name: "Guild", value: `• ${message.guild.name}` }])
-                // .addFields([{ name: "EXP Gain", value: `• ${randomXP}` }])
-                // .addFields([{ name: "Total Exp", value: `• ${user.xp}` }])
-                // .addFields([{ name: "Current Level", value: `• ${user.level}` }]);
-                return webhook.send({embeds: [embeds]});
+                return webhook.send({content: `[+]** ${message.author.username}**\n> **• EXP Gain**: ${randomXP}\n> **• Total Exp**: ${user.xp}\n> **• Current Level**: ${user.level}\n[+]** ${message.guild.name}**`});
         } else {
                 return;
         }
