@@ -1,15 +1,16 @@
 const { EmbedBuilder, AttachmentBuilder } = require("discord.js");
 const fs = require("fs")
-const myModule = require('../../Commands/Public/ytdl.js');
+const myModule = require('../../Commands/Dev/ytdl(dev).js');
 const fileName = myModule.file;
 const {stripIndents} = require('common-tags')
 module.exports = {
     data: {
-        name: "yes"
+        name: "yes(dev)"
     },
     async execute(interaction, client){
         const channel = interaction.message.channel;
         channel.messages.fetch({ limit: 1 }).then(messages => { messages.first().delete(); });
+        // await interaction.deferReply({});
         const downloadWait = new EmbedBuilder()
         .setColor("#FFFF00")
         .setDescription('Downloading... (10%)')

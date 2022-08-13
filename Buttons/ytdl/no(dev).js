@@ -1,10 +1,10 @@
 const { EmbedBuilder } = require("discord.js");
 const fs = require("fs")
-const myModule = require('../../Commands/Public/ytdl.js');
+const myModule = require('../../Commands/Dev/ytdl(dev).js');
 const fileName = myModule.file;
 module.exports = {
     data: {
-        name: "no"
+        name: "no(dev)"
     },
     async execute(interaction, client){
         const channel = interaction.message.channel;
