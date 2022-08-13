@@ -7,7 +7,7 @@ const {stripIndents} = require('common-tags')
 module.exports = {
     developer: true,
     data: new SlashCommandBuilder()
-    .setName("yt-downloader-mp3(dev)")
+    .setName("yt-downloader-mp3dev")
     .setDescription("yt-downloader-mp3(dev ver.)")
     .addStringOption(option =>
         option.setName('query')
