@@ -8,12 +8,12 @@
   "nodes": [
       {
           "id": "main",
-          "host": "lavalink.rukchadisa.live",
-          "port": 8080,
-          "password": "youshallnotpass",
+          "host": "node2.gglvxd.tk",
+          "port": 443,
+          "password": "free",
           "retryAmount": 15, 
           "retryDelay": 6000, 
-          "secure": false
+          "secure": true
       }
     ],
   "database": "mongodb+srv://oangsa:oangsa58528@sandwich.r5gx7cv.mongodb.net/?retryWrites=true&w=majority"
