@@ -29,7 +29,7 @@ module.exports = {
             .setUsername(interactionUser.user.username)
             .setDiscriminator(interactionUser.user.discriminator);
             rank.build().then(async data => {
-                const attachment = new AttachmentBuilder(data, { name: 'rankcard.png' });;
+                const attachment = new AttachmentBuilder(data, { name: 'rankcard.png' });
                 await interaction.reply({
                     files: [attachment],
                 });
