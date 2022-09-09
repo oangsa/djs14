@@ -15,7 +15,7 @@ module.exports = {
         return interaction.reply({content: "This command is outdated or not exist.", ephemeral: true});
 
         if(command.developer && interaction.user.id !== "372215298788687875")
-        return interaction.reply({contents: "This command is only available to developer.", ephemerals: true});
+        return interaction.reply({content: "This command is only available to developer.", ephemeral: true});
 
         command.execute(interaction,client);
     }

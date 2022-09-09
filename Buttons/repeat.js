@@ -1,8 +1,6 @@
 const { EmbedBuilder } = require("discord.js")
 module.exports = {
-    data: {
-        name: "repeat"
-    },
+    id: "repeat",
     execute(interaction, client){
         const { member } = interaction;
         const VoiceChannel = member.voice.channel;

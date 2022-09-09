@@ -1,20 +1,20 @@
-function loadButtons(client) {
+async function loadButtons(client) {
+    const { loadFiles } = require("../functions/fileLoader");
     const ascii = require("ascii-table");
-    const fs = require("fs");
-    const table = new ascii().setHeading("Button", "Status");
-    const folders = fs.readdirSync("./Buttons");
-    for (const folder of folders) {
-        const files = fs
-        .readdirSync(`./Buttons/${folder}`)
-        .filter((file) => file.endsWith(".js"));
-        for (const file of files) {
-            const button = require(`../Buttons/${folder}/${file}`)
-            client.buttons.set(button.data.name, button)
-            table.addRow(file, "✅");
-            continue;
-        }
-    }
-    return console.log(table.toString(), "\nButtons Loaded.")
-}
-
-module.exports = { loadButtons };
+    const table = new ascii("Buttons List");
+  
+    const Files = await loadFiles("Buttons");
+  
+    Files.forEach((file) => {
+      const button = require(file);
+      if (!button.id) return;
+      
+      client.buttons.set(button.id, button);
+      table.setHeading(`Button ID`, `Status`);
+      table.addRow(`${button.id}`, "✅");
+    });
+  
+    return console.log(table.toString())
+  }
+  
+  module.exports = { loadButtons };

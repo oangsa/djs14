@@ -2,9 +2,7 @@ const { EmbedBuilder } = require("discord.js");
 const genius = require("genius-lyrics");
 const gClient = new genius.Client();
 module.exports = {
-    data: {
-        name: "lyrics"
-    },
+    id: "lyrics",
     async execute(interaction, client){
         const { member } = interaction;
         const VoiceChannel = member.voice.channel;

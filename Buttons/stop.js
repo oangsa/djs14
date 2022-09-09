@@ -1,8 +1,6 @@
 const { EmbedBuilder } = require("discord.js")
 module.exports = {
-    data: {
-        name: "skip"
-    },
+    id: "stop",
     execute(interaction, client){
         const { member } = interaction;
         const VoiceChannel = member.voice.channel;
@@ -24,10 +22,10 @@ module.exports = {
             .setDescription("🔸| There is nothing in the queue.")
         ],
         ephemeral: true});
-        player.stop();
+        player.destroy();
         const pauseEmbed = new EmbedBuilder()
         .setColor("#FFFDD0")
-        .setDescription("⏭️ | Skipped.");
+        .setDescription("⏭️ | Stoped.");
         return interaction.reply({
             embeds: [pauseEmbed],
             ephemeral: true

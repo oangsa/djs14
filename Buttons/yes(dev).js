@@ -1,12 +1,11 @@
 // const { EmbedBuilder, AttachmentBuilder } = require("discord.js");
 // const fs = require("fs")
-// const myModule = require('../../Commands/Dev/ytdl(dev).js');
+// const myModule = require('../Commands/Dev/ytdl(dev)');
 // const fileName = myModule.file;
 // const {stripIndents} = require('common-tags')
 // module.exports = {
-//     data: {
-//         name: "yes(dev)"
-//     },
+//     id: "yes(dev)",
+//     developer: true,
 //     async execute(interaction, client){
 //         const channel = interaction.message.channel;
 //         channel.messages.fetch({ limit: 1 }).then(messages => { messages.first().delete(); });
@@ -41,7 +40,7 @@
 //             waiting.edit({ embeds:[downloadWait4] }).then(m => m.delete({timeout: 15000}))
 //         }, 8000)
 //         setTimeout(async function() {
-//             const tes = fs.readFileSync(`musicFolder/${fileName}.mp3`)
+//             const tes = fs.readFileSync(`../musicFolder/${fileName}.mp3`)
 //             const file = new AttachmentBuilder(tes, { name : `music.mp3` })
 //             channel.send({ files: [file] })}, 12000
 //         )

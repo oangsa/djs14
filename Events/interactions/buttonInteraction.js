@@ -1,17 +1,20 @@
-const { ButtonInteraction } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
-    name: "interactionCreate",
-    /**
-     * @param {ButtonInteraction} interaction
-     */
-    execute(interaction, client) {
-        if(!interaction.isButton()) return;
-        const Button = client.buttons.get(interaction.customId);
+  name: "interactionCreate",
+    async execute(interaction, client) {
+    if (!interaction.isButton()) return;
 
-        if(!Button) {
-            return interaction.reply({content: "This button is outdated or not exist.", ephemeral: true})
-        }
-        Button.execute(interaction, client);
-    }
-}
+    const button = client.buttons.get(interaction.customId);
+
+    if (!button) return;
+
+    if (button == undefined) return;
+
+    if (button.permission && !interaction.member.permissions.has(button.permission)) return interaction.reply({ embeds: [ new EmbedBuilder().setDescription( `⛔ | You don't have the required permissions to use this.`).setColor("#f8312f") ], ephemeral: true });
+
+    if (button.developer && interaction.user.id !== "372215298788687875") return interaction.reply({ embeds: [ new EmbedBuilder().setDescription( `⛔ | This button is for developers only.`).setColor("#f8312f") ], ephemeral: true });
+
+    button.execute(interaction, client);
+  },
+};
