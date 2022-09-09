@@ -21,6 +21,7 @@ module.exports = {
     async execute(interaction) {
         interaction.deferReply({});
         const query = interaction.options.getString("query");
+        const channel = interaction.channel;
         ytsr(query).then(async i => {
             try {
                 const music = i.items[0]

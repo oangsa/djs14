@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, CommandInteraction, PermissionFlagsBits } = require("discord.js");
+const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -6,7 +6,7 @@ module.exports = {
     .setDescription("Show the ping")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     /**
-     * @param {CommandInteraction} interaction
+     * @param {ChatInputCommandInteraction} interaction
      * 
      */
     execute(interaction, client) {
