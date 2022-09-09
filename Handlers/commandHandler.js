@@ -3,7 +3,7 @@
 //     const fs = require("fs");
 //     const table = new ascii().setHeading("Command", "Status");
 
-const { commands } = require('..');
+// const { commands } = require('..');
 
 //     let commandsArray = [];
 //     let devArray = [];
