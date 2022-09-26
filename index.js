@@ -15,9 +15,7 @@ const { LavasfyClient } = require("lavasfy");
 
 //HANDLERS
 const { loadEvents } = require("./Handlers/eventHandler");
-// const { loadCommands } = require("./Handlers/commandHandler");
-// const { loadButtons } = require("./Handlers/buttonHandler");
-// const { AntiCrash } = require("./Handlers/anticrashHandler");
+const { AntiCrash } = require("./Handlers/anticrashHandler");
 
 client.events = new Collection();
 client.buttons = new Collection();
@@ -56,6 +54,7 @@ client.manager = new Manager({
 });
 
 client.login(client.config.TOKEN).then(() => {
+  AntiCrash(client);
   if (!Database) {
     return console.log(`${client.user.username} isn't connect to database.`); 
   }

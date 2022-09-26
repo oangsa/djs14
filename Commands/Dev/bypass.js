@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, CommandInteraction, PermissionFlagsBits, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionFlagsBits, EmbedBuilder } = require("discord.js");
 const axios = require("axios")
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
 	.setRequired(true))
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     /**
-     * @param {CommandInteraction} interaction
+     * @param {ChatInputCommandInteraction} interaction
      */
     execute(interaction) {
         const ads = interaction.options.getString("link");

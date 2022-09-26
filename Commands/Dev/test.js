@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, CommandInteraction, PermissionFlagsBits } = require("discord.js");
+const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionFlagsBits } = require("discord.js");
 
 module.exports = {
     developer: true,
@@ -7,7 +7,7 @@ module.exports = {
     .setDescription("test")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     /**
-     * @param {CommandInteraction} interaction
+     * @param {ChatInputCommandInteraction} interaction
      */
     execute(interaction) {
         interaction.reply({content: "test", ephemeral: true})

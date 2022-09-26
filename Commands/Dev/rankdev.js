@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, CommandInteraction, PermissionFlagsBits, EmbedBuilder, AttachmentBuilder, Colors } = require("discord.js");
+const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionFlagsBits, EmbedBuilder, AttachmentBuilder } = require("discord.js");
 const Levels = require("discord-xp");
 const canvacord = require("canvacord");
 
@@ -9,7 +9,7 @@ module.exports = {
     .setDescription("rank of user. (dev ver.)")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     /**
-     * @param {CommandInteraction} interaction
+     * @param {ChatInputCommandInteraction} interaction
      */
     async execute(interaction) {
         const interactionUser = await interaction.guild.members.fetch(interaction.user.id);

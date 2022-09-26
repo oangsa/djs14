@@ -16,5 +16,6 @@
           "secure": true
       }
     ],
-  "database": "mongodb+srv://oangsa:oangsa58528@sandwich.r5gx7cv.mongodb.net/?retryWrites=true&w=majority"
+  "database": "mongodb+srv://oangsa:oangsa58528@sandwich.r5gx7cv.mongodb.net/?retryWrites=true&w=majority",
+  "DataBase": "mongodb+srv://oangsa:oangsa58528@reallevel.ll6kymd.mongodb.net/?retryWrites=true&w=majority"
 }

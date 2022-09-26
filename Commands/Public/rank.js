@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, CommandInteraction, PermissionFlagsBits, EmbedBuilder, AttachmentBuilder } = require("discord.js");
+const { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder, AttachmentBuilder } = require("discord.js");
 const Levels = require("discord-xp");
 const canvacord = require("canvacord");
 
@@ -7,7 +7,7 @@ module.exports = {
     .setName("rank")
     .setDescription("rank of user."),
     /**
-     * @param {CommandInteraction} interaction
+     * @param {ChatInputCommandInteraction} interaction
      */
     async execute(interaction) {
         // interaction.deferReply({});
