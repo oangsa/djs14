@@ -37,8 +37,6 @@ module.exports = {
                 }
             //logger
                 return webhook.send({content: `[+]** ${message.author.username}**\n> **• EXP Gain**: ${randomXP}\n> **• Total Exp**: ${user.xp}\n> **• Current Level**: ${user.level}\n[+]** ${message.guild.name}**`});
-        } else {
-            return;
         }
     }
 }

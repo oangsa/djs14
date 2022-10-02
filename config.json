@@ -8,14 +8,13 @@
   "nodes": [
       {
           "id": "main",
-          "host": "node2.gglvxd.tk",
+          "host": "node1.kartadharta.xyz",
           "port": 443,
-          "password": "free",
+          "password": "kdlavalink",
           "retryAmount": 15, 
-          "retryDelay": 6000, 
+          "retryDelay": 6000,
           "secure": true
       }
     ],
-  "database": "mongodb+srv://oangsa:oangsa58528@sandwich.r5gx7cv.mongodb.net/?retryWrites=true&w=majority",
-  "DataBase": "mongodb+srv://oangsa:oangsa58528@reallevel.ll6kymd.mongodb.net/?retryWrites=true&w=majority"
+  "database": "mongodb+srv://oangsa:oangsa58528@sandwich.r5gx7cv.mongodb.net/?retryWrites=true&w=majority"
 }
