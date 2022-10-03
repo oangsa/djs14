@@ -13,20 +13,20 @@ module.exports = {
         if (!VoiceChannel || !player.playing && !player.queue.current) return interaction.reply({ embeds: [
             new EmbedBuilder()
             .setColor("#FF0000")
-            .setDescription("🔸| There is nothing in the queue or you don't joined the voice channel yet.")
+            .setDescription("⛔ | There is nothing in the queue or you don't joined the voice channel yet.")
         ],
         ephemeral: true});
         if (!player.playing) return interaction.reply({embeds: [
             new EmbedBuilder()
             .setColor("#FF0000")
-            .setDescription("🔸| There is nothing in the queue.")
+            .setDescription("⛔ | There is nothing in the queue.")
         ],
         ephemeral: true});
         if (!player.trackRepeat && !player.queueRepeat) {
             return interaction.reply({embeds: [
                 new EmbedBuilder()
                 .setColor("#FF0000")
-                .setDescription("🔸| Repeat mode has already disabled.")
+                .setDescription("⛔ | Repeat mode has already disabled.")
             ],
             ephemeral: true});
         } else {

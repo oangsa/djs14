@@ -15,14 +15,14 @@ module.exports = {
         if (!VoiceChannel || !player.playing && !player.queue.current) return interaction.reply({ embeds: [
             new EmbedBuilder()
             .setColor("#FF0000")
-            .setDescription("🔸| There is nothing in the queue or you don't joined the voice channel yet.")
+            .setDescription("⛔ | There is nothing in the queue or you don't joined the voice channel yet.")
         ],
         ephemeral: true});
         try {
             if (!player.playing) return interaction.reply({embeds: [
                 new EmbedBuilder()
                 .setColor("#FF0000")
-                .setDescription("🔸| There is nothing in the queue.")
+                .setDescription("⛔ | There is nothing in the queue.")
             ],
             ephemeral: true});
             await interaction.deferReply();
@@ -34,7 +34,7 @@ module.exports = {
             if (!lyrics) {
             const noLyrics = new EmbedBuilder()
             .setColor("Grey")
-            .setDescription(`🔸| No lyrics found for **[${track.title}](${track.uri})**` );
+            .setDescription(`⛔ | No lyrics found for **[${track.title}](${track.uri})**` );
             return interaction.reply({ embeds: [noLyrics] });
             }
             const lyricsEmbed = new EmbedBuilder()
@@ -50,7 +50,7 @@ module.exports = {
             const track = player.queue.current;
             const errEmbed = new EmbedBuilder()
             .setColor("#FF0000")
-            .setDescription(`🔸 | ${err} for **[${track.title}](${track.uri})**`)
+            .setDescription(`⛔ | ${err} for **[${track.title}](${track.uri})**`)
             interaction.editReply({ embeds : [errEmbed] })
         }
     }

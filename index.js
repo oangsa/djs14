@@ -30,8 +30,6 @@ loadEvents(client);
 //Database
 const mongoose = require("mongoose");
 const Database = client.config.database;
-
-
 client.lavasfy = new LavasfyClient(
     {
       clientID: client.config.spotifyClientID,
