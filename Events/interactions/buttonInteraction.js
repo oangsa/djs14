@@ -1,20 +1,45 @@
-const { EmbedBuilder } = require("discord.js");
+const { ButtonInteraction, Client, EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "interactionCreate",
-    async execute(interaction, client) {
-    if (!interaction.isButton()) return;
+  /**
+   * @param {ButtonInteraction} interaction
+   * @param {Client} client
+   */
+  async execute(interaction, client) {
+    if (interaction.isButton()) {
+      const Embed = new EmbedBuilder();
+      const button = client.buttons.get(interaction.customId);
 
-    const button = client.buttons.get(interaction.customId);
+      if (!button) return;
+      if (button == undefined) return;
 
-    if (!button) return;
+      if (
+        button.permission &&
+        !interaction.member.permissions.has(button.permission)
+      )
+        return interaction.reply({
+          embeds: [
+            Embed.setColor("Blurple")
+              .setDescription(
+                "🔹 | You don't have the required permissions to use this button."
+              )
+              .setTimestamp(),
+          ],
+        });
 
-    if (button == undefined) return;
+      if (button.developer && interaction.user.id !== client.config.ownerIDs)
+        return interaction.reply({
+          embeds: [
+            Embed.setColor("Blurple")
+              .setDescription(
+                "🔹 | This button is only available to developers."
+              )
+              .setTimestamp(),
+          ],
+        });
 
-    if (button.permission && !interaction.member.permissions.has(button.permission)) return interaction.reply({ embeds: [ new EmbedBuilder().setDescription( `⛔ | You don't have the required permissions to use this.`).setColor("#f8312f") ], ephemeral: true });
-
-    if (button.developer && interaction.user.id !== "372215298788687875") return interaction.reply({ embeds: [ new EmbedBuilder().setDescription( `⛔ | This button is for developers only.`).setColor("#f8312f") ], ephemeral: true });
-
-    button.execute(interaction, client);
+      button.execute(interaction, client);
+    }
   },
 };

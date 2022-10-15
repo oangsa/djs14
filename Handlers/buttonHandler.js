@@ -1,20 +1,22 @@
 async function loadButtons(client) {
-    const { loadFiles } = require("../functions/fileLoader");
-    const ascii = require("ascii-table");
-    const table = new ascii("Buttons List");
-  
-    const Files = await loadFiles("Buttons");
-  
-    Files.forEach((file) => {
-      const button = require(file);
-      if (!button.id) return;
-      
-      client.buttons.set(button.id, button);
-      table.setHeading(`Button ID`, `Status`);
-      table.addRow(`${button.id}`, "✅");
-    });
-  
-    return console.log(table.toString())
-  }
-  
-  module.exports = { loadButtons };
+  const { magenta, green } = require("chalk");
+  const { loadFiles } = require("../functions/fileLoader");
+
+  const files = await loadFiles("buttons");
+  files.forEach((file) => {
+    const button = require(file);
+    if (!button.id) return;
+
+    client.buttons.set(button.id, button);
+
+    return console.log(
+      magenta("[") +
+        magenta("Buttons") +
+        magenta("]") +
+        " Loaded" +
+        green(` ${button.id}.js`)
+    );
+  });
+}
+
+module.exports = { loadButtons };

@@ -7,13 +7,16 @@
     
   "nodes": [
       {
-          "id": "main",
-          "host": "node1.kartadharta.xyz",
-          "port": 443,
-          "password": "kdlavalink",
-          "retryAmount": 15, 
-          "retryDelay": 6000,
-          "secure": true
+        "name": "main",
+        "url": "node1.kartadharta.xyz:443",
+        "auth": "kdlavalink",
+        "secure": true
+      },
+      {
+        "name": "alther",
+        "url": "lavalink.oops.wtf:443",
+        "auth": "www.freelavalink.ga",
+        "secure": true
       }
     ],
   "database": "mongodb+srv://oangsa:oangsa58528@cluster0.q9lfhle.mongodb.net/?retryWrites=true&w=majority"

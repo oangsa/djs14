@@ -1,37 +1,37 @@
-const { EmbedBuilder } = require("discord.js")
+const { ButtonInteraction, EmbedBuilder } = require("discord.js");
+const client = require("../index.js");
+
 module.exports = {
-    id: "pause",
-    execute(interaction, client){
-        const { member } = interaction;
-        const VoiceChannel = member.voice.channel;
-        const player = client.manager.create({
-            guild: interaction.guild.id,
-            voiceChannel: member.voice.channel.id,
-            textChannel: interaction.channelId,
-            selfDeafen: true,
-        });
-        if (!VoiceChannel || !player.playing && !player.queue.current) return interaction.reply({ embeds: [
-            new EmbedBuilder()
-            .setColor("#FF0000")
-            .setDescription("⛔ | There is nothing in the queue or you don't joined the voice channel yet.")
-        ],
-        ephemeral: true});
-        if (player.playing) {
-            player.pause(true);
-            return interaction.reply({embeds: [
-                new EmbedBuilder()
-                .setColor("#FFFDD0")
-                .setDescription("⏸️ | Paused.")
-            ],
-            ephemeral: true});
-        } else {
-            player.pause(false);
-            return interaction.reply({embeds: [
-                new EmbedBuilder()
-                .setColor("#FFFDD0")
-                .setDescription("▶️ | Resumed.")
-            ],
-            ephemeral: true});
-        }
+  id: "pause",
+  /**
+   * @param {ButtonInteraction} interaction
+   */
+  async execute(interaction) {
+    const player = client.manager.players.get(interaction.guild.id);
+    const embed = new EmbedBuilder().setColor("Blurple").setTimestamp();
+
+    if (!player) return;
+
+    await interaction.deferReply();
+
+    if (!player.paused) {
+      player.pause(true);
+
+      embed.setDescription("🔹 | Paused.").setFooter({
+        text: `Action executed by ${interaction.user.username}.`,
+        iconURL: interaction.user.avatarURL({ dynamic: true }),
+      });
+      return interaction.editReply({ embeds: [embed] });
     }
-}
+
+    if (player.paused) {
+      player.pause(false);
+
+      embed.setDescription("🔹 | Resumed.").setFooter({
+        text: `Action executed by ${interaction.user.username}.`,
+        iconURL: interaction.user.avatarURL({ dynamic: true }),
+      });
+      return interaction.editReply({ embeds: [embed] });
+    }
+  },
+};

@@ -7,15 +7,17 @@ const client = new Client({
   partials: [User, Message, GuildMember, ThreadMember]
 });
 
-//ERELA
-const Deezer = require("erela.js-deezer");
-const Apple = require("erela.js-apple");
-const { Manager } = require("erela.js");
-const { LavasfyClient } = require("lavasfy");
+//SHOUKAKU
+const { Connectors } = require("shoukaku");
+const { Kazagumo } = require("kazagumo");
+const Spotify = require("kazagumo-spotify");
+
 
 //HANDLERS
 const { loadEvents } = require("./Handlers/eventHandler");
 const { AntiCrash } = require("./Handlers/anticrashHandler");
+const { loadShoukakuNodes } = require("./Handlers/shoukakuNode");
+const { loadShoukakuPlayer } = require("./Handlers/shoukakuPlayer");
 
 client.events = new Collection();
 client.buttons = new Collection();
@@ -24,31 +26,33 @@ client.config = require("./config.json");
 
 //call Functions
 loadEvents(client);
-
+loadShoukakuNodes(client);
+loadShoukakuPlayer(client);
 
 
 //Database
 const mongoose = require("mongoose");
 const Database = client.config.database;
-client.lavasfy = new LavasfyClient(
-    {
-      clientID: client.config.spotifyClientID,
+
+const kazagumoClient = new Kazagumo({
+  plugins: [
+    new Spotify({
+      clientId: client.config.spotifyClientID,
       clientSecret: client.config.spotifySecret,
-      filterAudioOnlyResult: true,
-      autoResolve: true,
-      useSpotifyMetadata: true,
-      playlistPageLoadLimit: 1,
-    },
-    client.config.nodes
-  );
-  
-client.manager = new Manager({
-    nodes: client.config.nodes,
-    plugins: [new Apple(), new Deezer()],
-    send: (id, payload) => {
-      let guild = client.guilds.cache.get(id);
-      if (guild) guild.shard.send(payload);
-    },
+    }),
+  ],
+  defaultSearchEngine: "youtube",
+  send: (id, payload) => {
+    let guild = client.guilds.cache.get(id);
+    if (guild) guild.shard.send(payload);
+  },
+},
+new Connectors.DiscordJS(client),
+client.config.nodes, {
+  moveOnDisconnect: false,
+  resume: true,
+  reconnectTries: 5,
+  restTimeout: 10000,
 });
 
 client.login(client.config.TOKEN).then(() => {
@@ -65,3 +69,4 @@ client.login(client.config.TOKEN).then(() => {
 }).catch((err) => console.log(err))
 
 module.exports = client;
+client.manager = kazagumoClient;
