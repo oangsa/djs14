@@ -1,15 +1,8 @@
 const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionFlagsBits, EmbedBuilder } = require("discord.js");
-const mongoose = require("mongoose");
-const notesSchema = {
-    name: String,
-    class_num: String,
-    total_days: Number,
-    dates: Array,
-    ndates: Array
-}
-const note = mongoose.model("RS", notesSchema);
+const { note } = require("../../mongoSchemas/notes")
+
 module.exports = {
-    developer: true,
+    developer: false, // set dev mode for
     data: new SlashCommandBuilder()
     .setName("leave_check")
     .setDescription("leave_check")
@@ -31,14 +24,14 @@ module.exports = {
             if(!res){
                 interaction.reply({embeds: [errEmbed], ephemeral: true})
             } else {
-                dates = res["ndates"]
+                dates = res["nweekDate"]
                 const datemap = dates.map(x => {
                     const d = new Date(x).toLocaleDateString('TH-th', options)
                     return ` ⤷ ${d}`
                 }).join(" \n")
                 const embed = new EmbedBuilder()
                 .setTitle(res["name"])
-                .setDescription(`\`\`\`ini\nTotals\n ⤷ ${res["total_days"]} days\nDates\n${datemap}\`\`\``)
+                .setDescription(`\`\`\`ini\nTotals\n ⤷ ${res["total_days"]} days\nWeek Dates\n ⤷ ${res["week_days"]} days\nDates\n${datemap}\`\`\``)
                 .setColor("#57F287")
                 
                 interaction.reply({embeds: [embed], ephemeral: true})

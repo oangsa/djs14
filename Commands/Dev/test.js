@@ -2,6 +2,7 @@ const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionFlagsBits } 
 
 module.exports = {
     developer: true,
+    test: true,
     data: new SlashCommandBuilder()
     .setName("test")
     .setDescription("test")

@@ -3,6 +3,7 @@ const Levels = require("discord-xp");
 const canvacord = require("canvacord");
 
 module.exports = {
+    developer: true,
     data: new SlashCommandBuilder()
     .setName("rank")
     .setDescription("rank of user."),

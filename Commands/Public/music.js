@@ -19,6 +19,7 @@ const {
 const pms = require("pretty-ms");
 
 module.exports = {
+  test: true,
   botPermissions: ["SendMessages", "EmbedLinks", "Connect", "Speak"],
   data: new SlashCommandBuilder()
     .setName("music")

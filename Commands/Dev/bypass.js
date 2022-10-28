@@ -2,7 +2,7 @@ const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionFlagsBits, E
 const axios = require("axios")
 
 module.exports = {
-    developer: true,
+    test: true,
     data: new SlashCommandBuilder()
     .setName("bypass")
     .setDescription("bypass ads link. (dev ver.)")
