@@ -23,6 +23,7 @@ client.events = new Collection();
 client.buttons = new Collection();
 client.commands = new Collection();
 client.config = require("./config.json");
+require('dotenv').config()
 
 //call Functions
 loadEvents(client);
@@ -32,13 +33,13 @@ loadShoukakuPlayer(client);
 
 //Database
 const mongoose = require("mongoose");
-const Database = client.config.database;
+const Database = process.env.database;
 
 const kazagumoClient = new Kazagumo({
   plugins: [
     new Spotify({
-      clientId: client.config.spotifyClientID,
-      clientSecret: client.config.spotifySecret,
+      clientId: process.env.spotifyClientID,
+      clientSecret: process.env.spotifySecret,
     }),
   ],
   defaultSearchEngine: "youtube",
@@ -55,7 +56,7 @@ client.config.nodes, {
   restTimeout: 10000,
 });
 
-client.login(client.config.TOKEN).then(() => {
+client.login(process.env.TOKEN).then(() => {
   AntiCrash(client);
   if (!Database) {
     return console.log(`${client.user.username} isn't connect to database.`); 

@@ -1,23 +1,16 @@
 {
-  "TOKEN": "MTAwMTQ4NTAxMDQ4MzgxMDM4Ng.GwF3Tz.AC70ThzOTQFfnhHhFt9Y2W_n_L83960Wq2_GCM",
-  "YTTOKEN" : "VISITOR_INFO1_LIVE=HnJGX6lQARM; PREF=f6=80&tz=Asia.Bangkok&f5=20000; HSID=A_RGk3yELtSgUXMVn; SSID=ATyD4TqGaY2pvLCtC; APISID=NKe5Y-rE3luw-ZYR/AhaF6WtLK19HLXiEG; SAPISID=H2OjThymd71xSnds/AzRiRIKGP5cRbFk4C; __Secure-1PAPISID=H2OjThymd71xSnds/AzRiRIKGP5cRbFk4C; __Secure-3PAPISID=H2OjThymd71xSnds/AzRiRIKGP5cRbFk4C; SID=JAj3riVZPSy5eCoImEfSunPBuRVno1REhslKJm2M33SsDyUorRXbkyhdQ5duDiaQlKoKSQ.; __Secure-1PSID=JAj3riVZPSy5eCoImEfSunPBuRVno1REhslKJm2M33SsDyUo-h4UbBY0_V8VFSgayoWRiw.; __Secure-3PSID=JAj3riVZPSy5eCoImEfSunPBuRVno1REhslKJm2M33SsDyUovNs6ciJurcDj0cgMo2gZ0g.; LOGIN_INFO=AFmmF2swRQIgKy9vBSSTFdNgB-xLHmhkjRm_4r-UZKi4okLRIjz5CCECIQC4lks8AiDLeTOjscxTbyrdAlXy0d6s7xY5YSpK2PeM0Q:QUQ3MjNmd2pvYThDcEtvSll1TDl5dlZMYU12VFBRcHRhSUdjVGItdzBQcy1BWjBmT01wZnYySXJHeFliaU1EMWZRb0szQUZnVkRLUFdmQkp0dm1FeWFZWEx6QXc5aGpERk45cUNaSUpKMjNIeHlRU194cU5ZVE1mUDJBRmhiekZObWZDQ0JaUW1QZWhVeWRrUzBpemNDNUJIaUdNdVRTMkRR; YSC=p-TIOqCC3IU; SIDCC=AJi4QfHRn_FWw_FNeML6Cp2UTsYao-_F23DH83axIGO0iJhUZKfT_Zrg0fV5qFWHMF61y8PplFwT; __Secure-3PSIDCC=AJi4QfESTCrlzQwzs4mLUP7tDduUZ2PgUBJ4ZzZGyDOnSFnfpUK0IP5C5OMMKl5kxcsyMkdqiLfs",
-  "devguild": "829199248821714944",
-  "spotifyClientID": "c00159706c34414197eca89aa3f3093a",
-  "spotifySecret": "39a55283e9cd4695ae54b791f4a7db2b",
-    
   "nodes": [
       {
         "name": "main",
-        "url": "node1.kartadharta.xyz:443",
-        "auth": "kdlavalink",
+        "url": "lava-v3.ajieblogs.eu.org:443",
+        "auth": "https://dsc.gg/ajidevserver",
         "secure": true
       },
       {
         "name": "alther",
-        "url": "lavalink.oops.wtf:443",
-        "auth": "www.freelavalink.ga",
+        "url": "lava-v4.ajieblogs.eu.org:443",
+        "auth": "https://dsc.gg/ajidevserver",
         "secure": true
       }
-    ],
-  "database": "mongodb+srv://oangsa:oangsa58528@cluster0.q9lfhle.mongodb.net/?retryWrites=true&w=majority"
+    ]
 }
