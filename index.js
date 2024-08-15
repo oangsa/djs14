@@ -12,6 +12,7 @@ const { Connectors } = require("shoukaku");
 const { Kazagumo } = require("kazagumo");
 const Spotify = require("kazagumo-spotify");
 
+const keep_alive = require("./utils/keep_alive")
 
 //HANDLERS
 const { loadEvents } = require("./Handlers/eventHandler");
