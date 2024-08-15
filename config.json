@@ -8,8 +8,20 @@
       },
       {
         "name": "alther",
-        "url": "lava-v4.ajieblogs.eu.org:443",
-        "auth": "https://dsc.gg/ajidevserver",
+        "url": "v3.lavalink.rocks:443",
+        "auth": "horizxon.tech",
+        "secure": true
+      },
+      {
+        "name": "alther2",
+        "url": "lavalink.serenetia.com:443",
+        "auth": "lavalinkv3",
+        "secure": true
+      },
+      {
+        "name": "alther3",
+        "url": "lavalinkbackup.skybloxsystems.com:443",
+        "auth": "s4DarqP$&y",
         "secure": true
       }
     ]
